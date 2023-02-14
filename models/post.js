@@ -1,12 +1,8 @@
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
-  author: String,
   message: String,
-  likes: Number,
-  likedBy: Array,
-  isLiked: Boolean,
-  isMultiple: Boolean,
+  likes: { type: Number, default: 0 }
 });
 
 const Post = mongoose.model("Post", PostSchema);

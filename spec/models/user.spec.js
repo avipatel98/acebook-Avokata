@@ -12,7 +12,6 @@ describe("User model", () => {
 
   it("has an email address", () => {
     const user = new User({
-      username: "testuser",
       email: "someone@example.com",
       password: "password",
     });
