@@ -16,6 +16,7 @@
 const mongoose = require("mongoose");
 const User = require("../../models/user");
 const Post = require("../../models/post");
+const Comment = require("../../models/comment");
 
 module.exports = async (on) => {
   on("task", {
@@ -36,6 +37,15 @@ module.exports = async (on) => {
       await Post.deleteMany({});
 
       return null;
-    }
+    },
+    async clearComments() {
+      mongoose.connect("mongodb://0.0.0.0/acebook_test", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+      await Comment.deleteMany({});
+
+      return null;
+    },
   });
 };

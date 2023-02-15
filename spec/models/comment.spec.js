@@ -12,8 +12,22 @@ describe("Comment model", () => {
     });
   });
 
-  it("has a commen", () => {
+  it("has a comment", () => {
     var comment = new Comment(new_comment);
     expect(comment.message).toEqual("some comment");
+  });
+  it("can save a comment", (done) => {
+    var comment = new Comment(new_comment);
+
+    comment.save((err) => {
+      expect(err).toBeNull();
+
+      Comment.find((err, comments) => {
+        expect(err).toBeNull();
+
+        expect(comments[0]).toMatchObject(new_comment);
+        done();
+      });
+    });
   });
 });
