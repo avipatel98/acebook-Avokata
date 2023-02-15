@@ -6,7 +6,8 @@ describe("Registration", () => {
 
   it("A user signs up and is redirected to sign in", () => {
     // sign up
-    cy.visit("/users/new");
+    cy.visit("/");
+    cy.get('[href="/users/new"]').contains("Sign Up").click();
     cy.get("#username").type("testusernames");
     cy.get("#email").type("testusers@example.com");
     cy.get("#password").type("Makers12345.");
