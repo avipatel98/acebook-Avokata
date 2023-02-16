@@ -1,13 +1,26 @@
 describe("Authentication", () => {
+<<<<<<< HEAD
+  beforeEach(() => {
+    cy.task("clearUsers");
+    cy.task("clearPosts");
+  });
+
+  it("A user signs in and is redirected to /posts", () => {
+    // sign up
+    cy.visit("/");
+    cy.get('[href="/users/new"]').contains("Sign Up").click();
+    cy.get("#username").type("anothersomeusername");
+=======
   it("A user signs in and is redirected to /posts", () => {
     // sign up
     cy.visit("/users/new");
+>>>>>>> main
     cy.get("#email").type("someone@example.com");
     cy.get("#password").type("password");
     cy.get("#submit").click();
 
     // sign in
-    cy.visit("/sessions/new");
+    // cy.visit("/sessions/new");
     cy.get("#email").type("someone@example.com");
     cy.get("#password").type("password");
     cy.get("#submit").click();
