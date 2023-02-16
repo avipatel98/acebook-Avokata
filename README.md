@@ -12,9 +12,9 @@ It uses:
 - [Jest](https://jestjs.io/) for testing.
 - [Cypress](https://www.cypress.io/) for end-to-end testing.
 
-## Card wall
+## Team Avokata Trello Board
 
-REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
+https://trello.com/b/DsszLV2T/acebook-avokata
 
 ## Quickstart
 
