@@ -12,7 +12,10 @@ describe("User model", () => {
 
   it("has an email address", () => {
     const user = new User({
+<<<<<<< HEAD
       username: "somerandomuser",
+=======
+>>>>>>> main
       email: "someone@example.com",
       password: "password",
     });

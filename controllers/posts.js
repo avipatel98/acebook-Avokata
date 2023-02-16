@@ -1,10 +1,10 @@
-/* eslint-disable quotes */
 const Post = require("../models/post");
 const Comment = require("../models/comment");
 const Request = require("../models/request");
 const User = require("../models/user");
 
 const PostsController = {
+<<<<<<< HEAD
   Index: async (req, res) => {
     if (!req.session.user) {
       res.redirect("/");
@@ -74,13 +74,23 @@ const PostsController = {
         });
       });
     }
-  },
+=======
+  Index: (req, res) => {
+    Post.find((err, posts) => {
+      if (err) {
+        throw err;
+      }
 
+      res.render("posts/index", { posts: posts });
+    });
+>>>>>>> main
+  },
   New: (req, res) => {
-    res.render("posts/new", { user: req.session.user });
+    res.render("posts/new", {});
   },
   Create: (req, res) => {
     const post = new Post(req.body);
+<<<<<<< HEAD
     post.author = req.session.user.username;
     post.likes = 0;
     post.likedBy = [];
@@ -118,6 +128,15 @@ const PostsController = {
       await Post.updateOne(query, { likes: newLikes, likedBy: newLikedBy });
       res.redirect("/posts");
     }
+=======
+    post.save((err) => {
+      if (err) {
+        throw err;
+      }
+
+      res.status(201).redirect("/posts");
+    });
+>>>>>>> main
   },
   PostByID: async (req, res) => {
     const post = await Post.findById(req.params.id);
