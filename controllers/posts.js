@@ -1,6 +1,8 @@
 /* eslint-disable quotes */
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const Request = require("../models/request");
+const User = require("../models/user");
 
 const PostsController = {
   Index: async (req, res) => {
@@ -8,6 +10,9 @@ const PostsController = {
       res.redirect("/");
     } else {
       const { username } = req.session.user;
+      const user = await User.findOne({ username: username });
+      const friends = user.friends || [];
+      const allRequests = await Request.find({ status: "pending" });
 
       await Post.find((err, posts) => {
         if (err) {
@@ -15,6 +20,17 @@ const PostsController = {
         }
 
         posts.forEach((post) => {
+          const req1 = allRequests.find(
+            (request) =>
+              request.requesterUsername === username &&
+              request.requesteeUsername === post.author
+          );
+          const req2 = allRequests.find(
+            (request) =>
+              request.requesterUsername === post.author &&
+              request.requesteeUsername === username
+          );
+
           if (post.likedBy.includes(username)) {
             post.isLiked = true;
           } else {
@@ -31,6 +47,24 @@ const PostsController = {
             post.commentsPlural = false;
           } else {
             post.commentsPlural = true;
+          }
+
+          if (post.author === username) {
+            post.requestStatus = "You";
+          } else if (req1) {
+            post.requestStatus = "Request Sent";
+          } else if (req2) {
+            post.requestStatus = "Request Received";
+          } else if (friends.includes(post.author)) {
+            post.requestStatus = "Friends";
+          } else {
+            post.requestStatus = "+ Request";
+          }
+
+          if (post.requestStatus === "+ Request") {
+            post.requestButtonEnabled = true;
+          } else {
+            post.requestButtonEnabled = false;
           }
         });
 
@@ -65,6 +99,7 @@ const PostsController = {
       });
     }
   },
+
   Like: async (req, res) => {
     const post = await Post.findById(req.params.id);
 

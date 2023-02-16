@@ -7,8 +7,10 @@ const PostSchema = new mongoose.Schema({
   likedBy: Array,
   isLiked: Boolean,
   isMultiple: Boolean,
-  ccommentsPlural: Boolean,
+  commentsPlural: Boolean,
   comments: Array,
+  requestStatus: String,
+  requestButtonEnabled: Boolean,
 });
 
 const Post = mongoose.model("Post", PostSchema);
