@@ -2,8 +2,6 @@ var mongoose = require("mongoose");
 
 require("../mongodb_helper");
 var Post = require("../../models/post");
-// If spec changes for a post change the dictionary fields below
-var new_post = {author: "somerandomuser", message: "some message", likes: 0}
 
 describe("Post model", () => {
   beforeEach((done) => {
@@ -13,7 +11,7 @@ describe("Post model", () => {
   });
 
   it("has a message", () => {
-    var post = new Post(new_post);
+    var post = new Post({ message: "some message" });
     expect(post.message).toEqual("some message");
   });
 
@@ -26,7 +24,7 @@ describe("Post model", () => {
   });
 
   it("can save a post", (done) => {
-    var post = new Post(new_post);
+    var post = new Post({ message: "some message" });
 
     post.save((err) => {
       expect(err).toBeNull();
@@ -34,7 +32,7 @@ describe("Post model", () => {
       Post.find((err, posts) => {
         expect(err).toBeNull();
 
-        expect(posts[0]).toMatchObject(new_post);
+        expect(posts[0]).toMatchObject({ message: "some message" });
         done();
       });
     });
