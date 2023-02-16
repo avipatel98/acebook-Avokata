@@ -11,46 +11,7 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
-<<<<<<< HEAD
-const mongoose = require("mongoose");
-const User = require("../../models/user");
-const Post = require("../../models/post");
-const Comment = require("../../models/comment");
-
-module.exports = async (on) => {
-  on("task", {
-    async clearUsers() {
-      mongoose.connect("mongodb://0.0.0.0/acebook_test", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      await User.deleteMany({});
-
-      return null;
-    },
-    async clearPosts() {
-      mongoose.connect("mongodb://0.0.0.0/acebook_test", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      await Post.deleteMany({});
-
-      return null;
-    },
-    async clearComments() {
-      mongoose.connect("mongodb://0.0.0.0/acebook_test", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      await Comment.deleteMany({});
-
-      return null;
-    },
-  });
-};
-=======
 module.exports = function() {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 }
->>>>>>> main
