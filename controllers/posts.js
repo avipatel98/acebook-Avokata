@@ -1,13 +1,18 @@
-/* eslint-disable quotes */
 const Post = require("../models/post");
 const Comment = require("../models/comment");
+const Request = require("../models/request");
+const User = require("../models/user");
 
 const PostsController = {
+<<<<<<< HEAD
   Index: async (req, res) => {
     if (!req.session.user) {
       res.redirect("/");
     } else {
       const { username } = req.session.user;
+      const user = await User.findOne({ username: username });
+      const friends = user.friends || [];
+      const allRequests = await Request.find({ status: "pending" });
 
       await Post.find((err, posts) => {
         if (err) {
@@ -15,6 +20,17 @@ const PostsController = {
         }
 
         posts.forEach((post) => {
+          const req1 = allRequests.find(
+            (request) =>
+              request.requesterUsername === username &&
+              request.requesteeUsername === post.author
+          );
+          const req2 = allRequests.find(
+            (request) =>
+              request.requesterUsername === post.author &&
+              request.requesteeUsername === username
+          );
+
           if (post.likedBy.includes(username)) {
             post.isLiked = true;
           } else {
@@ -32,6 +48,24 @@ const PostsController = {
           } else {
             post.commentsPlural = true;
           }
+
+          if (post.author === username) {
+            post.requestStatus = "You";
+          } else if (req1) {
+            post.requestStatus = "Request Sent";
+          } else if (req2) {
+            post.requestStatus = "Request Received";
+          } else if (friends.includes(post.author)) {
+            post.requestStatus = "Friends";
+          } else {
+            post.requestStatus = "+ Request";
+          }
+
+          if (post.requestStatus === "+ Request") {
+            post.requestButtonEnabled = true;
+          } else {
+            post.requestButtonEnabled = false;
+          }
         });
 
         res.render("posts/index", {
@@ -40,13 +74,23 @@ const PostsController = {
         });
       });
     }
-  },
+=======
+  Index: (req, res) => {
+    Post.find((err, posts) => {
+      if (err) {
+        throw err;
+      }
 
+      res.render("posts/index", { posts: posts });
+    });
+>>>>>>> main
+  },
   New: (req, res) => {
-    res.render("posts/new", { user: req.session.user });
+    res.render("posts/new", {});
   },
   Create: (req, res) => {
     const post = new Post(req.body);
+<<<<<<< HEAD
     post.author = req.session.user.username;
     post.likes = 0;
     post.likedBy = [];
@@ -65,6 +109,7 @@ const PostsController = {
       });
     }
   },
+
   Like: async (req, res) => {
     const post = await Post.findById(req.params.id);
 
@@ -83,6 +128,15 @@ const PostsController = {
       await Post.updateOne(query, { likes: newLikes, likedBy: newLikedBy });
       res.redirect("/posts");
     }
+=======
+    post.save((err) => {
+      if (err) {
+        throw err;
+      }
+
+      res.status(201).redirect("/posts");
+    });
+>>>>>>> main
   },
   PostByID: async (req, res) => {
     const post = await Post.findById(req.params.id);

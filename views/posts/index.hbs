@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -66,7 +67,7 @@
 
                             <span class="request">
                                 <form action="/requests/{{this.author}}" method="POST">
-                                    <input class="custom-file-upload" type="submit" value="+ Request">
+                                    <input class="custom-file-upload" type="submit" value="{{this.requestStatus}}" {{#unless this.requestButtonEnabled}} disabled{{/unless}}>
                                 </form>
                             </span>
                         </div>
@@ -106,3 +107,14 @@
     </body>
     <footer>Acebook™ in partnership with Eta™</footer>
 </html>
+=======
+<h1>Timeline</h1>
+<ul class="posts">
+  {{#each posts}}
+  <li>{{this.message}}</li> 
+  <li>{{this.likes}} likes</li>
+  {{/each}}
+</ul>
+
+<a class="new-post-link" href="/posts/new">New post</a>
+>>>>>>> main

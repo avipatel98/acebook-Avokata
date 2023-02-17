@@ -1,6 +1,3 @@
-/* eslint-disable function-paren-newline */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable quotes */
 const User = require("../models/user");
 
 const UsersController = {
@@ -8,8 +5,10 @@ const UsersController = {
     res.render("users/new", {});
   },
 
-  Create: async (req, res) => {
+  Create: (req, res) => {
     const user = new User(req.body);
+<<<<<<< HEAD
+    user.friends = [];
 
     // const allUsersArray = await User.find({});
 
@@ -31,7 +30,13 @@ const UsersController = {
         });
       } else {
         res.redirect("/users/new");
+=======
+    user.save((err) => {
+      if (err) {
+        throw err;
+>>>>>>> main
       }
+      res.status(201).redirect("/posts");
     });
   },
 };

@@ -7,14 +7,15 @@ describe("Liking post tests", () => {
   
     it("can like a post", () => {
       // sign up
-    cy.visit("/users/new");
+    cy.visit("/");
+    cy.get('[href="/users/new"]').contains("Sign Up").click();
     cy.get("#username").type("anothersomeusername");
     cy.get("#email").type("someone@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
 
       // sign in
-    cy.visit("/sessions/new");
+    // cy.visit("/sessions/new");
     cy.get("#email").type("someone@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
@@ -34,14 +35,15 @@ describe("Liking post tests", () => {
 
     it("multiple users can like a post", () => {
         // sign up user 1
-    cy.visit("/users/new");
+    cy.visit("/");
+    cy.get('[href="/users/new"]').contains("Sign Up").click();
     cy.get("#username").type("anotheruser1");
     cy.get("#email").type("someone1@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
 
       // sign in
-    cy.visit("/sessions/new");
+    // cy.visit("/sessions/new");
     cy.get("#email").type("someone1@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
@@ -53,16 +55,18 @@ describe("Liking post tests", () => {
     cy.get(".posts").should("contain", "0 Likes");
     cy.get('.fa-heart').click();
     cy.get(".posts").should("contain", "1 Like");
+    cy.get('[type="submit"]').contains("Log Out").click();
 
     // sign up user 2
-    cy.visit("/users/new");
+    // cy.visit("/users/new");
+    cy.get('[href="/users/new"]').contains("Sign Up").click();
     cy.get("#username").type("anotheruser2");
     cy.get("#email").type("someone2@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
     
      // sign in
-    cy.visit("/sessions/new");
+    // cy.visit("/sessions/new");
     cy.get("#email").type("someone2@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
@@ -70,25 +74,29 @@ describe("Liking post tests", () => {
     cy.get(".posts").should("contain", "1 Like");
     cy.get('.fa-heart').click();
     cy.get(".posts").should("contain", "2 Likes");
+    cy.get('[type="submit"]').contains("Log Out").click();
 
     // sign up user 3
-    cy.visit("/users/new");
+    // cy.visit("/users/new");
+    cy.get('[href="/users/new"]').contains("Sign Up").click();
     cy.get("#username").type("anotheruser3");
     cy.get("#email").type("someone3@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
     
      // sign in
-    cy.visit("/sessions/new");
+    // cy.visit("/sessions/new");
     cy.get("#email").type("someone3@example.com");
     cy.get("#password").type("pA$sw0rd");
     cy.get("#submit").click();
+
 
     cy.get(".posts").should("contain", "2 Likes");
     cy.get('.fa-heart').click();
     cy.get(".posts").should("contain", "3 Likes");
     cy.get('.fa-heart').click();
     cy.get(".posts").should("contain", "2 Likes");
+    cy.get('[type="submit"]').contains("Log Out").click();
     })
 });
 //       // submit a post
